@@ -249,6 +249,13 @@ public class FlinkOptions extends HoodieConfig {
           + "2) payload_combine: read the base file records first, for each record in base file, checks whether the key is in the\n"
           + "   log file records(combines the two records with same key for base and log file records), then read the left log file records");
 
+  // Default compression codec for parquet
+  public static final ConfigOption<String> PARQUET_COMPRESSION_CODEC_NAME = ConfigOptions
+      .key("hoodie.parquet.compression.codec")
+      .stringType()
+      .defaultValue("gzip")
+      .withDescription("Compression Codec for parquet files");
+
   public static final ConfigOption<Boolean> UTC_TIMEZONE = ConfigOptions
       .key("read.utc-timezone")
       .booleanType()

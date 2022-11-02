@@ -91,6 +91,9 @@ public class FlinkCompactionConfig extends Configuration {
   @Parameter(names = {"--compaction-tasks"}, description = "Parallelism of tasks that do actual compaction, default is -1", required = false)
   public Integer compactionTasks = -1;
 
+  @Parameter(names = {"--compression-codec"}, description = "Compression Codec, default is gzip", required = false)
+  public String compressionCodec = "gzip";
+
   @Parameter(names = {"--schedule", "-sc"}, description = "Not recommended. Schedule the compaction plan in this job.\n"
       + "There is a risk of losing data when scheduling compaction outside the writer job.\n"
       + "Scheduling compaction in the writer job and only let this job do the compaction execution is recommended.\n"
@@ -154,7 +157,8 @@ public class FlinkCompactionConfig extends Configuration {
     conf.setBoolean(FlinkOptions.COMPACTION_SCHEDULE_ENABLED, config.schedule);
     // Map memory
     conf.setString(HoodieMemoryConfig.SPILLABLE_MAP_BASE_PATH.key(), config.spillableMapPath);
-
+    // Compression Codec for parquet files
+    conf.setString(FlinkOptions.PARQUET_COMPRESSION_CODEC_NAME, config.compressionCodec);
     return conf;
   }
 }
